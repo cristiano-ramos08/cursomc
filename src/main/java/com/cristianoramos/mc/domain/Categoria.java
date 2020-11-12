@@ -2,10 +2,19 @@ package com.cristianoramos.mc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 //objetos dela poderão ser convertidos em uma sequência de bytes, para q os objetos possam ser gravados em arquivos, trafegar em rede..
+@Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	//id será a chave primária
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)//Definição estratégia de criação automática de ID
 	private Integer id;
 	private String nome;
 	
