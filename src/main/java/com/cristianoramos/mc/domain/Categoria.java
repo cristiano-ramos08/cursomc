@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//objetos dela poderão ser convertidos em uma sequência de bytes, para q os objetos possam ser gravados em arquivos, trafegar em rede..
+//Objetos poderão ser convertidos em uma sequência de bytes, para que os mesmos possam ser gravados em arquivos, trafegar em rede..
 @Entity
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
