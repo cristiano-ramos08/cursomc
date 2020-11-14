@@ -1,10 +1,6 @@
 package com.cristianoramos.mc.resources;
 
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cristianoramos.mc.domain.Categoria;
 import com.cristianoramos.mc.services.CategoriaService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
@@ -23,7 +21,7 @@ public class CategoriaResource {
 	private CategoriaService service; //Está acessando o serviço.
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {//Esse método vai receber um ID que vai vir na URL, para isso precisa da anotação @PathVariable
+	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {//Esse método vai receber um ID que vai vir na URL, para isso precisa da anotação @PathVariable
 		
 		Categoria obj = service.buscar(id);
 		
