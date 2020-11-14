@@ -1,11 +1,14 @@
 package com.cristianoramos.mc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 //Objetos poderão ser convertidos em uma sequência de bytes, para que os mesmos possam ser gravados em arquivos, trafegar em rede..
 @Entity
@@ -17,6 +20,10 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)//Definição estratégia de criação automática de ID
 	private Integer id;
 	private String nome;
+	
+	//Inicia porque é uma coleção
+	@ManyToMany(mappedBy="categorias")// referencia o mapeamento já criado em Produto,não precisando criar de novo a tabela que fica no meio.
+	private List<Produto> produtos = new ArrayList<>();
 	
 	//Instancia objetos sem jogar nada para os atributos.
 	public Categoria() {
@@ -39,7 +46,12 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 	//Dois objetos são comparados pelo seu conteúdo e não pelo ponteiro de memória e compara obetos por valor.
 	//normalmente usa ID para comparar, se o ID é diferente, os objetos também são
 	@Override
