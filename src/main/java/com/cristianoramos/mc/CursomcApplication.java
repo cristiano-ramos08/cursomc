@@ -9,12 +9,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cristianoramos.mc.domain.Categoria;
 import com.cristianoramos.mc.domain.Cidade;
+import com.cristianoramos.mc.domain.Cliente;
+import com.cristianoramos.mc.domain.Endereco;
 import com.cristianoramos.mc.domain.Estado;
 import com.cristianoramos.mc.domain.Produto;
+import com.cristianoramos.mc.domain.enums.TipoCliente;
 import com.cristianoramos.mc.repositories.CategoriaRepository;
 import com.cristianoramos.mc.repositories.CidadeRepository;
+import com.cristianoramos.mc.repositories.ClienteRepository;
+import com.cristianoramos.mc.repositories.EnderecoRepository;
 import com.cristianoramos.mc.repositories.EstadoRepository;
 import com.cristianoramos.mc.repositories.ProdutoRepository;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
@@ -30,6 +36,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 			
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -60,7 +72,7 @@ public class CursomcApplication implements CommandLineRunner {
 		Estado est1 = new Estado(null, "Minas gerais");
 		Estado est2 = new Estado(null, "São Paulo");
 		
-		//de muitos pra um, já pode por o valor direto da sociacao direto, ex cat2.
+		//de muitos pra um, já pode por o valor na associacao, ex cat2.
 		Cidade c1 = new Cidade(null, "Uberlândia", est1);
 		Cidade c2 = new Cidade(null, "São Paulo", est2);
 		Cidade c3 = new Cidade(null, "Campinas", est2);
@@ -72,7 +84,20 @@ public class CursomcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		Cliente cli1 = new Cliente(null, "Maria Silva", "Maria@mail.com", "767676763367", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("U2772727","2763763763"));
+		
+		Endereco e1 = new Endereco(null, "Rua flores", "390", "Apto 303", "jardim", "3232323", cli1, c1);
+		Endereco e2 = new Endereco(null, "R avenida matos", "105", "sala 800", "Centro", "323723723", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
 		
 	}
+	
+	
 
 }
